@@ -14,13 +14,6 @@ import Havaiano from "../assets/Havaiano.png";
 import Arabe from "../assets/Arabe.png";
 import Irlandes from "../assets/Irlandes.png";
 
-type TGlobalProps = {
-  coffees: Tmenu[];
-  totalCoffees: number;
-  handleAddQuantityCoffee: (idCoffee: number) => void;
-  removeCoffee: (idCoffee: number) => void;
-};
-
 type Tmenu = {
   id: number;
   name: string;
@@ -28,6 +21,26 @@ type Tmenu = {
   description: string;
   price: number;
   orderQuantity: number;
+};
+
+type TDelivery = {
+  cep: number;
+  rua: string;
+  numero: string;
+  complemento?: string;
+  bairro: string;
+  cidade: string;
+  uf: string;
+  payment: number;
+};
+
+type TGlobalProps = {
+  coffees: Tmenu[];
+  totalCoffees: number;
+  dataDelivery: TDelivery | undefined;
+  handleAddQuantityCoffee: (idCoffee: number) => void;
+  removeCoffee: (idCoffee: number) => void;
+  handleDataDelivery: (data: TDelivery) => void;
 };
 
 const CtxGlobal = createContext({} as TGlobalProps);
@@ -152,6 +165,11 @@ export const GlobalContext = ({ children }: { children: JSX.Element }) => {
       orderQuantity: 0,
     },
   ]);
+
+  const [dataDelivery, setDataDelivery] = useState<TDelivery | undefined>(
+    undefined
+  );
+
   const [totalCoffees, setTotalCoffees] = useState(0);
 
   const handleAddQuantityCoffee = (idCoffee: number) => {
@@ -178,9 +196,29 @@ export const GlobalContext = ({ children }: { children: JSX.Element }) => {
     setTotalCoffees((prevTotal) => prevTotal - 1);
   };
 
+  const handleDataDelivery = (data: TDelivery) => {
+    setDataDelivery({
+      cep: data.cep,
+      rua: data.rua,
+      numero: data.numero,
+      complemento: data.complemento,
+      bairro: data.bairro,
+      cidade: data.cidade,
+      uf: data.uf,
+      payment: data.payment,
+    });
+  };
+
   return (
     <CtxGlobal.Provider
-      value={{ coffees, totalCoffees, handleAddQuantityCoffee, removeCoffee }}
+      value={{
+        coffees,
+        totalCoffees,
+        dataDelivery,
+        handleAddQuantityCoffee,
+        removeCoffee,
+        handleDataDelivery,
+      }}
     >
       {children}
     </CtxGlobal.Provider>

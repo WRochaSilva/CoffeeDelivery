@@ -8,7 +8,7 @@ import {
   Button,
 } from "@chakra-ui/react";
 import axios from "axios";
-import { useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { CiLocationOn } from "react-icons/ci";
 import { CiMoneyBill } from "react-icons/ci";
 import { BsCurrencyDollar } from "react-icons/bs";
@@ -27,15 +27,27 @@ type Tmenu = {
   orderQuantity: number;
 };
 
+type TDelivery = {
+  cep: number;
+  rua: string;
+  numero: string;
+  complemento?: string;
+  bairro: string;
+  cidade: string;
+  uf: string;
+  payment: number;
+};
+
 export const Checkout = () => {
   const toast = useToast();
-  const { register, setValue } = useForm();
-  const { coffees } = useGlobal();
+  const { register, setValue, handleSubmit } = useForm<TDelivery>();
+  const { coffees, handleDataDelivery } = useGlobal();
   const navigate = useNavigate();
 
   const [coffeesAdded, setCoffeesAdded] = useState<Tmenu[]>(
     coffees.filter((coffee) => coffee.orderQuantity > 0)
   );
+
   const totalValueItem = coffeesAdded.map(
     (coffeeAdd) => coffeeAdd.price * coffeeAdd.orderQuantity
   );
@@ -99,7 +111,7 @@ export const Checkout = () => {
           });
         }
 
-        setValue("estado", data.uf);
+        setValue("uf", data.uf);
         setValue("rua", data.logradouro);
         setValue("cidade", data.localidade);
         setValue("bairro", data.bairro);
@@ -119,9 +131,16 @@ export const Checkout = () => {
     }
   };
 
+  const handleSubmitDataDelivery: SubmitHandler<TDelivery> = (
+    data: TDelivery
+  ) => {
+    handleDataDelivery(data);
+    navigate("/Confirmed");
+  };
+
   return (
     <Flex flexDir={"column"} w={"full"} h={"full"}>
-      <Flex>
+      <Flex as="form" onSubmit={handleSubmit(handleSubmitDataDelivery)}>
         <Flex
           flexDir={"column"}
           w={"560px"}
@@ -142,6 +161,7 @@ export const Checkout = () => {
             h={"18px"}
             m={"5px"}
             p={"5px"}
+            {...register("cep")}
             placeholder="CEP"
             onChange={(e) => handleGetCep(e.target.value)}
           />
@@ -193,7 +213,7 @@ export const Checkout = () => {
               h={"18px"}
               m={"5px"}
               p={"5px"}
-              {...register("estado")}
+              {...register("uf")}
               placeholder="UF"
             />
           </Flex>
@@ -262,9 +282,9 @@ export const Checkout = () => {
             <Text as={"b"}>{`R$ ${valueOrder}`}</Text>
           </Flex>
           <Button
+            type="submit"
             bgColor={"#DBAC2C"}
             color={"white"}
-            onClick={() => navigate("/Confirmed")}
           >
             CONFIRMAR PEDIDO
           </Button>
