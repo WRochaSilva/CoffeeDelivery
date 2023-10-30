@@ -38,6 +38,12 @@ type TDelivery = {
   payment: number;
 };
 
+type TColorButtonPayment = {
+  credit: "#E6E5E5" | "gray";
+  debit: "#E6E5E5" | "gray";
+  money: "#E6E5E5" | "gray";
+};
+
 export const Checkout = () => {
   const toast = useToast();
   const { register, setValue, handleSubmit } = useForm<TDelivery>();
@@ -47,6 +53,14 @@ export const Checkout = () => {
   const [coffeesAdded, setCoffeesAdded] = useState<Tmenu[]>(
     coffees.filter((coffee) => coffee.orderQuantity > 0)
   );
+  const [colorButtonPayment, setColorButtonPayment] =
+    useState<TColorButtonPayment>({
+      credit: "#E6E5E5",
+      debit: "#E6E5E5",
+      money: "#E6E5E5",
+    });
+
+  const [typePaymeny, setTypePayment] = useState(-1);
 
   const totalValueItem = coffeesAdded.map(
     (coffeeAdd) => coffeeAdd.price * coffeeAdd.orderQuantity
@@ -131,10 +145,55 @@ export const Checkout = () => {
     }
   };
 
+  const handlePayment = (pay: number) => {
+    switch (pay) {
+      case 0:
+        setColorButtonPayment({
+          credit: "gray",
+          debit: "#E6E5E5",
+          money: "#E6E5E5",
+        });
+        setTypePayment(0);
+        break;
+      case 1:
+        setColorButtonPayment({
+          credit: "#E6E5E5",
+          debit: "gray",
+          money: "#E6E5E5",
+        });
+        setTypePayment(1);
+        break;
+      case 2:
+        setColorButtonPayment({
+          credit: "#E6E5E5",
+          debit: "#E6E5E5",
+          money: "gray",
+        });
+        setTypePayment(2);
+        break;
+      default:
+        setColorButtonPayment({
+          credit: "#E6E5E5",
+          debit: "#E6E5E5",
+          money: "#E6E5E5",
+        });
+    }
+  };
+
   const handleSubmitDataDelivery: SubmitHandler<TDelivery> = (
-    data: TDelivery
+    dataAdress: TDelivery
   ) => {
-    handleDataDelivery(data);
+    const payloadDataDelivery: TDelivery = {
+      cep: dataAdress.cep,
+      rua: dataAdress.rua,
+      numero: dataAdress.numero,
+      complemento: dataAdress.complemento,
+      bairro: dataAdress.bairro,
+      cidade: dataAdress.cidade,
+      uf: dataAdress.uf,
+      payment: typePaymeny,
+    };
+    handleDataDelivery(payloadDataDelivery);
     navigate("/Confirmed");
   };
 
@@ -281,11 +340,7 @@ export const Checkout = () => {
             <Text>Total</Text>
             <Text as={"b"}>{`R$ ${valueOrder}`}</Text>
           </Flex>
-          <Button
-            type="submit"
-            bgColor={"#DBAC2C"}
-            color={"white"}
-          >
+          <Button type="submit" bgColor={"#DBAC2C"} color={"white"}>
             CONFIRMAR PEDIDO
           </Button>
         </Flex>
@@ -306,13 +361,26 @@ export const Checkout = () => {
           O pagamento é feito na entrega. Escolha a forma que deseja pagar
         </Text>
         <Flex justifyContent={"space-between"} m={"20px"}>
-          <Button bgColor={"#E6E5E5"} leftIcon={<BsCreditCard2Back />}>
+          <Button
+            value={0}
+            bgColor={colorButtonPayment?.credit}
+            leftIcon={<BsCreditCard2Back />}
+            onClick={() => handlePayment(0)}
+          >
             Cartão de Crédito
           </Button>
-          <Button bgColor={"#E6E5E5"} leftIcon={<BsCreditCard />}>
+          <Button
+            bgColor={colorButtonPayment?.debit}
+            leftIcon={<BsCreditCard />}
+            onClick={() => handlePayment(1)}
+          >
             Cartão de Débito
           </Button>
-          <Button bgColor={"#E6E5E5"} leftIcon={<CiMoneyBill />}>
+          <Button
+            bgColor={colorButtonPayment?.money}
+            leftIcon={<CiMoneyBill />}
+            onClick={() => handlePayment(2)}
+          >
             Dinheiro
           </Button>
         </Flex>
