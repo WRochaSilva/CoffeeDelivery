@@ -1,8 +1,7 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useReducer, useState } from "react";
 import { DataBaseCoffees } from "../DataBaseCoffees";
 
-
-type Tmenu = {
+type TMenu = {
   id: number;
   name: string;
   photo: string;
@@ -23,7 +22,7 @@ type TDelivery = {
 };
 
 type TGlobalProps = {
-  coffees: Tmenu[];
+  coffees: TMenu[];
   totalCoffees: number;
   dataDelivery: TDelivery | undefined;
   handleAddQuantityCoffee: (idCoffee: number) => void;
@@ -34,7 +33,25 @@ type TGlobalProps = {
 const CtxGlobal = createContext({} as TGlobalProps);
 
 export const GlobalContext = ({ children }: { children: JSX.Element }) => {
-  const [coffees, setCoffees] = useState<Tmenu[]>(DataBaseCoffees);
+  const [coffees, dispatch] = useReducer((state: TMenu[], action: any) => {
+    if (action.type === "ADD_COFFEE") {
+      return state.map((coffee) => {
+        if (coffee.id === action.payload.idCoffee) {
+          return { ...coffee, orderQuantity: coffee.orderQuantity + 1 };
+        }
+        return coffee;
+      });
+    }
+    if (action.type === "REMOVE_COFFEE") {
+      return state.map((coffee) => {
+        if (coffee.id === action.payload.idCoffee) {
+          return { ...coffee, orderQuantity: coffee.orderQuantity - 1 };
+        }
+        return coffee;
+      });
+    }
+    return state;
+  }, DataBaseCoffees);
 
   const [dataDelivery, setDataDelivery] = useState<TDelivery | undefined>(
     undefined
@@ -43,26 +60,22 @@ export const GlobalContext = ({ children }: { children: JSX.Element }) => {
   const [totalCoffees, setTotalCoffees] = useState(0);
 
   const handleAddQuantityCoffee = (idCoffee: number) => {
-    setCoffees((prevCoffees) =>
-      prevCoffees.map((coffee) => {
-        if (coffee.id === idCoffee) {
-          return { ...coffee, orderQuantity: coffee.orderQuantity + 1 };
-        }
-        return coffee;
-      })
-    );
+    dispatch({
+      type: "ADD_COFFEE",
+      payload: {
+        idCoffee,
+      },
+    });
     setTotalCoffees((prevTotal) => prevTotal + 1);
   };
 
   const removeCoffee = (idCoffee: number) => {
-    setCoffees((prevCoffees) =>
-      prevCoffees.map((coffee) => {
-        if (coffee.id === idCoffee && coffee.orderQuantity > 0) {
-          return { ...coffee, orderQuantity: coffee.orderQuantity - 1 };
-        }
-        return coffee;
-      })
-    );
+    dispatch({
+      type: "REMOVE_COFFEE",
+      payload: {
+        idCoffee,
+      },
+    });
     setTotalCoffees((prevTotal) => prevTotal - 1);
   };
 
