@@ -91,17 +91,26 @@ export const AdressDelivery = () => {
         bgColor={"#F3F2F2"}
         borderRadius={"6px"}
         mb={"20px"}
-        p={"10px"}
+        p={"15px"}
       >
         <Flex flexDir={"column"} mb={"20px"}>
           <Flex alignItems={"center"}>
-            <Icon as={CiLocationOn} color={'#C47F17'}/>
-            <Text as={"b"} fontFamily={'Roboto, , sans-serif'} fontSize={'16px'}>Endereço de Entrega</Text>
+            <Icon as={CiLocationOn} color={"#C47F17"} />
+            <Text
+              as={"b"}
+              fontFamily={"Roboto, , sans-serif"}
+              fontSize={"16px"}
+            >
+              Endereço de Entrega
+            </Text>
           </Flex>
-          <Text fontFamily={'Roboto, , sans-serif'} fontSize={'14px'}>Informe o endereço onde deseja receber seu pedido</Text>
+          <Text fontFamily={"Roboto, , sans-serif"} fontSize={"14px"}>
+            Informe o endereço onde deseja receber seu pedido
+          </Text>
         </Flex>
         <Input
-         fontFamily={'Roboto, , sans-serif'} fontSize={'14px'}
+          fontFamily={"Roboto, , sans-serif"}
+          fontSize={"14px"}
           w={"200px"}
           m={"5px"}
           p={"5px"}
@@ -110,8 +119,9 @@ export const AdressDelivery = () => {
           onChange={(e) => handleGetCep(e.target.value)}
         />
         <Input
-         fontFamily={'Roboto, , sans-serif'} fontSize={'14px'}
-          w={"536px"}          
+          fontFamily={"Roboto, , sans-serif"}
+          fontSize={"14px"}
+          w={"510px"}
           m={"5px"}
           p={"5px"}
           {...register("rua")}
@@ -119,16 +129,18 @@ export const AdressDelivery = () => {
         />
         <Flex>
           <Input
-           fontFamily={'Roboto, , sans-serif'} fontSize={'14px'}
-            w={"176px"}            
+            fontFamily={"Roboto, , sans-serif"}
+            fontSize={"14px"}
+            w={"176px"}
             m={"5px"}
             p={"5px"}
             {...register("numero")}
             placeholder="Número"
           />
           <Input
-           fontFamily={'Roboto, , sans-serif'} fontSize={'14px'}
-            w={"324px"}            
+            fontFamily={"Roboto, , sans-serif"}
+            fontSize={"14px"}
+            w={"324px"}
             m={"5px"}
             p={"5px"}
             {...register("complemento")}
@@ -137,24 +149,27 @@ export const AdressDelivery = () => {
         </Flex>
         <Flex>
           <Input
-           fontFamily={'Roboto, , sans-serif'} fontSize={'14px'}
-            w={"176px"}            
+            fontFamily={"Roboto, , sans-serif"}
+            fontSize={"14px"}
+            w={"176px"}
             m={"5px"}
             p={"5px"}
             {...register("bairro")}
             placeholder="Bairro"
           />
           <Input
-           fontFamily={'Roboto, , sans-serif'} fontSize={'14px'}
-            w={"252px"}            
+            fontFamily={"Roboto, , sans-serif"}
+            fontSize={"14px"}
+            w={"252px"}
             m={"5px"}
             p={"5px"}
             {...register("cidade")}
             placeholder="Cidade"
           />
           <Input
-           fontFamily={'Roboto, , sans-serif'} fontSize={'14px'}
-            w={"60px"}            
+            fontFamily={"Roboto, , sans-serif"}
+            fontSize={"14px"}
+            w={"60px"}
             m={"5px"}
             p={"5px"}
             {...register("uf")}

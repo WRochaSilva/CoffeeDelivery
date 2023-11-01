@@ -61,17 +61,18 @@ export const PaymentForm = () => {
       flexDir={"column"}
       w={"560px"}
       h={"127px"}
+      p={'20px'}
       bgColor={"#F3F2F2"}
       borderRadius={"6px"}
     >
       <Flex alignItems={"center"}>
-        <Icon as={BsCurrencyDollar} />
-        <Text>Pagamento</Text>
+        <Icon as={BsCurrencyDollar} color={'#8047F8'} />
+        <Text fontFamily={'Roboto, , sans-serif'} fontSize={'16px'}ml={'5px'}>Pagamento</Text>
       </Flex>
-      <Text>
+      <Text fontFamily={'Roboto, , sans-serif'} fontSize={'14px'} ml={'20px'} mb={'10px'}>
         O pagamento é feito na entrega. Escolha a forma que deseja pagar
       </Text>
-      <Flex justifyContent={"space-between"} m={"20px"}>
+      <Flex justifyContent={"space-evenly"} >
         <Button
           value={0}
           bgColor={colorButtonPayment?.credit}
