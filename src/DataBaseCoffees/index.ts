@@ -31,7 +31,7 @@ export const DataBaseCoffees = [
     },
     {
       id: 3,
-      name: "ExpressoCremoso",
+      name: "Expresso Cremoso",
       photo: ExpressoCremoso,
       description: "Café expresso tradicional com espuma cremosa",
       price: 9.99,
@@ -39,7 +39,7 @@ export const DataBaseCoffees = [
     },
     {
       id: 4,
-      name: "ExpressoGelado",
+      name: "Expresso Gelado",
       photo: ExpressoGelado,
       description: "Bebida preparada com café expresso e cubos de gelo",
       price: 9.99,
@@ -47,7 +47,7 @@ export const DataBaseCoffees = [
     },
     {
       id: 5,
-      name: "CafeComLeite",
+      name: "Café com Leite",
       photo: CafeComLeite,
       description: "Meio a meio de expresso tradicional com leite vaporizado",
       price: 9.99,
@@ -90,7 +90,7 @@ export const DataBaseCoffees = [
     },
     {
       id: 10,
-      name: "ChocolateQuente",
+      name: "Chocolate Quente",
       photo: ChocolateQuente,
       description:
         "Bebida feita com chocolate dissolvido no leite quente e café",
