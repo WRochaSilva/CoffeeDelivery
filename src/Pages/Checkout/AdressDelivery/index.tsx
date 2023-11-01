@@ -104,7 +104,7 @@ export const AdressDelivery = () => {
               Endereço de Entrega
             </Text>
           </Flex>
-          <Text fontFamily={"Roboto, , sans-serif"} fontSize={"14px"}>
+          <Text fontFamily={"Roboto, , sans-serif"} fontSize={"14px"} ml={'17px'}>
             Informe o endereço onde deseja receber seu pedido
           </Text>
         </Flex>

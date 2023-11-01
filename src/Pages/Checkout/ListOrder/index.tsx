@@ -1,6 +1,7 @@
-import { Button, Flex, Text, Img } from "@chakra-ui/react";
+import { Button, Flex, Text, Img, Divider } from "@chakra-ui/react";
 import { useGlobal } from "../../../Context/GlobalContext";
 import { useState } from "react";
+import {FcEmptyTrash} from 'react-icons/fc'
 
 type Tmenu = {
   id: number;
@@ -61,64 +62,98 @@ export const ListOrder = () => {
     <Flex
       flexDir={"column"}
       w={"368px"}
-      h={"418px"}
+      p={"20px"}
       bgColor={"#F3F2F2"}
       borderRadius={" 6px 44px"}
     >
       {coffeesAdded.map(
         (coffeeAdd) =>
           coffeeAdd.orderQuantity > 0 && (
-            <Flex>
-              <Img src={coffeeAdd.photo} w={"64px"} h={"64px"} />
-              <Flex flexDir={"column"}>
-                <Flex justifyContent={"space-between"}>
-                  <Text>{coffeeAdd.name}</Text>
-                  <Text as={"b"}>
-                    {coffeeAdd.price * coffeeAdd.orderQuantity}
-                  </Text>
-                </Flex>
-                <Flex alignItems={"center"}>
-                  <Button
-                    bgColor={"#E6E5E5"}
-                    onClick={() => {
-                      handleDeleteQuantityCoffeeAdded(coffeeAdd.id);
-                    }}
-                  >
-                    -
-                  </Button>
-                  <Text>{coffeeAdd.orderQuantity}</Text>
-                  <Button
-                    bgColor={"#E6E5E5"}
-                    onClick={() => {
-                      handleAddQuantityCoffeeAdded(coffeeAdd.id);
-                    }}
-                  >
-                    +
-                  </Button>
-                  <Button
-                    bgColor={"#E6E5E5"}
-                    onClick={() => {
-                      handleDeleteAllQuantityCoffeeAdded(coffeeAdd.id);
-                    }}
-                  >
-                    Remover
-                  </Button>
+            <>
+              <Flex>
+                <Img src={coffeeAdd.photo} w={"64px"} h={"64px"} />
+                <Flex flexDir={"column"}>
+                  <Flex w={'270px'} justifyContent={"space-between"}>
+                    <Text ml={'20px'}>{coffeeAdd.name}</Text>
+                    <Text as={"b"}>
+                      {`R$ ${coffeeAdd.price * coffeeAdd.orderQuantity}`}
+                    </Text>
+                  </Flex>
+                  <Flex alignItems={"center"}>
+                    <Flex
+                      bgColor={"#E6E5E5"}
+                      alignItems={"center"}
+                      mr={'10px'}
+                      ml={'20px'}
+                      borderRadius={"5px"}
+                    >
+                      <Button
+                        colorScheme="transparent"
+                        bgColor={"#E6E5E5"}
+                        color={'#8047F8'}
+                        isDisabled={coffeeAdd.orderQuantity < 1}
+                        onClick={() => {
+                          handleDeleteQuantityCoffeeAdded(coffeeAdd.id);
+                        }}
+                      >
+                        -
+                      </Button>
+                      <Text>{coffeeAdd.orderQuantity}</Text>
+                      <Button
+                        colorScheme="transparent"
+                        bgColor={"#E6E5E5"}
+                        color={'#8047F8'}
+                        onClick={() => {
+                          handleAddQuantityCoffeeAdded(coffeeAdd.id);
+                        }}
+                      >
+                        +
+                      </Button>
+                    </Flex>
+                    <Button
+                      bgColor={"#E6E5E5"}
+                      leftIcon={<FcEmptyTrash />}
+                      onClick={() => {
+                        handleDeleteAllQuantityCoffeeAdded(coffeeAdd.id);
+                      }}
+                    >
+                      Remover
+                    </Button>
+                  </Flex>
                 </Flex>
               </Flex>
-            </Flex>
+              <Divider border={"1px solid #E6E5E5"} m={"10px 10px 20px 10px"} />
+            </>
           )
       )}
       <Flex justifyContent={"space-between"}>
-        <Text>Total de itens</Text>
-        <Text>{`R$ ${totalOrder}`}</Text>
+        <Text fontFamily={"Roboto, , sans-serif"} fontSize={"14px"}>
+          Total de itens
+        </Text>
+        <Text
+          fontFamily={"Roboto, , sans-serif"}
+          fontSize={"14px"}
+        >{`R$ ${totalOrder.toFixed(2)}`}</Text>
       </Flex>
       <Flex justifyContent={"space-between"}>
-        <Text>Entrega</Text>
-        <Text>{`R$ ${deliveryValue}`}</Text>
+        <Text fontFamily={"Roboto, , sans-serif"} fontSize={"14px"}>
+          Entrega
+        </Text>
+        <Text
+          fontFamily={"Roboto, , sans-serif"}
+          fontSize={"14px"}
+        >{`R$ ${deliveryValue}`}</Text>
       </Flex>
       <Flex justifyContent={"space-between"}>
-        <Text>Total</Text>
-        <Text as={"b"}>{`R$ ${valueOrder}`}</Text>
+        <Text fontFamily={"Roboto, , sans-serif"} fontSize={"16px"} as={"b"}>
+          Total
+        </Text>
+        <Text
+          fontFamily={"Roboto, , sans-serif"}
+          fontSize={"16px"}
+          as={"b"}
+          mb={"10px"}
+        >{`R$ ${valueOrder.toFixed(2)}`}</Text>
       </Flex>
       <Button type="submit" bgColor={"#DBAC2C"} color={"white"}>
         CONFIRMAR PEDIDO
