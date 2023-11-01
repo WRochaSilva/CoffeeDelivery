@@ -24,27 +24,48 @@ export const Menu = () => {
           <Flex w={"120px"} h={"120px"} mt={"-20px"}>
             <Img src={coffee.photo} alt={coffee.name} />
           </Flex>
-          <Box textAlign="center" mb={'40px'}>
+          <Box textAlign="center" mb={"40px"}>
             <Text as={"b"} fontFamily="Comic Sans, sans-serif">
               {coffee.name}
             </Text>
-            <Text fontFamily="Roboto, sans-serif" color={'#8D8686'} mt={'40px'}>{coffee.description}</Text>
+            <Text fontFamily="Roboto, sans-serif" color={"#8D8686"} mt={"40px"}>
+              {coffee.description}
+            </Text>
           </Box>
-          <Flex alignItems={"center"} gap={'5px'}>
+          <Flex alignItems={"center"} gap={"5px"}>
             <Text mr={"5px"}>R$</Text>
             <Text as={"b"} fontSize={"25px"}>
               {coffee.price}
             </Text>
-            <Flex  bgColor={'#E6E5E5'} alignItems={'center'} borderRadius={'5px'}>
-            <Button colorScheme="transparent" color={'#8047F8'} onClick={() => removeCoffee(coffee.id)}>-</Button>
-            <Text >{coffee.orderQuantity}</Text>
-            <Button colorScheme="transparent" color={'#8047F8'}  onClick={() => handleAddQuantityCoffee(coffee.id)}>
-              +
-            </Button>
+            <Flex
+              bgColor={"#E6E5E5"}
+              alignItems={"center"}
+              borderRadius={"5px"}
+            >
+              <Button
+                colorScheme="transparent"
+                color={"#8047F8"}
+                isDisabled={coffee.orderQuantity < 1 }
+                onClick={() => removeCoffee(coffee.id)}
+              >
+                -
+              </Button>
+              <Text>{coffee.orderQuantity}</Text>
+              <Button
+                colorScheme="transparent"
+                color={"#8047F8"}
+                onClick={() => handleAddQuantityCoffee(coffee.id)}
+              >
+                +
+              </Button>
             </Flex>
-            <Button bgColor={'#4B2995'}
+            <Button
+              bgColor={"#4B2995"}
               leftIcon={
-                <FaShoppingCart  color={'white'} onClick={() => navigate("/checkout")} />
+                <FaShoppingCart
+                  color={"white"}
+                  onClick={() => navigate("/checkout")}
+                />
               }
             />
           </Flex>
