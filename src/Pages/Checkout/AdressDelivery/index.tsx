@@ -90,18 +90,19 @@ export const AdressDelivery = () => {
         h={"292px"}
         bgColor={"#F3F2F2"}
         borderRadius={"6px"}
-        mr={"20px"}
+        mb={"20px"}
+        p={"10px"}
       >
         <Flex flexDir={"column"} mb={"20px"}>
           <Flex alignItems={"center"}>
-            <Icon as={CiLocationOn} />
-            <Text as={"b"}>Endereço de Entrega</Text>
+            <Icon as={CiLocationOn} color={'#C47F17'}/>
+            <Text as={"b"} fontFamily={'Roboto, , sans-serif'} fontSize={'16px'}>Endereço de Entrega</Text>
           </Flex>
-          <Text>Informe o endereço onde deseja receber seu pedido</Text>
+          <Text fontFamily={'Roboto, , sans-serif'} fontSize={'14px'}>Informe o endereço onde deseja receber seu pedido</Text>
         </Flex>
         <Input
-          w={"176px"}
-          h={"18px"}
+         fontFamily={'Roboto, , sans-serif'} fontSize={'14px'}
+          w={"200px"}
           m={"5px"}
           p={"5px"}
           {...register("cep")}
@@ -109,8 +110,8 @@ export const AdressDelivery = () => {
           onChange={(e) => handleGetCep(e.target.value)}
         />
         <Input
-          w={"536px"}
-          h={"18px"}
+         fontFamily={'Roboto, , sans-serif'} fontSize={'14px'}
+          w={"536px"}          
           m={"5px"}
           p={"5px"}
           {...register("rua")}
@@ -118,16 +119,16 @@ export const AdressDelivery = () => {
         />
         <Flex>
           <Input
-            w={"176px"}
-            h={"18px"}
+           fontFamily={'Roboto, , sans-serif'} fontSize={'14px'}
+            w={"176px"}            
             m={"5px"}
             p={"5px"}
             {...register("numero")}
             placeholder="Número"
           />
           <Input
-            w={"324px"}
-            h={"18px"}
+           fontFamily={'Roboto, , sans-serif'} fontSize={'14px'}
+            w={"324px"}            
             m={"5px"}
             p={"5px"}
             {...register("complemento")}
@@ -136,24 +137,24 @@ export const AdressDelivery = () => {
         </Flex>
         <Flex>
           <Input
-            w={"176px"}
-            h={"18px"}
+           fontFamily={'Roboto, , sans-serif'} fontSize={'14px'}
+            w={"176px"}            
             m={"5px"}
             p={"5px"}
             {...register("bairro")}
             placeholder="Bairro"
           />
           <Input
-            w={"252px"}
-            h={"18px"}
+           fontFamily={'Roboto, , sans-serif'} fontSize={'14px'}
+            w={"252px"}            
             m={"5px"}
             p={"5px"}
             {...register("cidade")}
             placeholder="Cidade"
           />
           <Input
-            w={"36px"}
-            h={"18px"}
+           fontFamily={'Roboto, , sans-serif'} fontSize={'14px'}
+            w={"60px"}            
             m={"5px"}
             p={"5px"}
             {...register("uf")}

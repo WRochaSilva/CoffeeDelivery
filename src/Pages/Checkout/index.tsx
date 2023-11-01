@@ -6,7 +6,7 @@ import { ListOrder } from "./ListOrder";
 export const Checkout = () => {
   return (
     <Grid gridTemplateColumns={"repeat(2, minmax(0, 1fr))"}>
-      <GridItem>
+      <GridItem ml={'40px'}>
         <AdressDelivery />
         <PaymentForm />
       </GridItem>

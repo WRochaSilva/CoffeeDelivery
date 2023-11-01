@@ -62,7 +62,6 @@ export const PaymentForm = () => {
       w={"560px"}
       h={"127px"}
       bgColor={"#F3F2F2"}
-      mt={"-106px"}
       borderRadius={"6px"}
     >
       <Flex alignItems={"center"}>
