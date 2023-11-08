@@ -25,7 +25,7 @@ export const OrderConfirmed = () => {
         <Flex
           flexDir={"column"}
           w={"470px"}
-          h={"160px"}
+          h={"200px"}
           borderRadius={"6px 36px"}
           border={"1px inset #DBAC2C"}
           pl={"20px"}
@@ -107,7 +107,7 @@ export const OrderConfirmed = () => {
         </Flex>
       </GridItem>
       <GridItem>
-        <Flex w={"492px"} h={"293px"}>
+        <Flex w={"492px"} h={"293px"} mt={'40px'}>
           <Img src={sucess} />
         </Flex>
       </GridItem>

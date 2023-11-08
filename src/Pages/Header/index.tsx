@@ -6,7 +6,7 @@ import { useGlobal } from "../../Context/GlobalContext";
 import { useNavigate } from "react-router-dom";
 
 export const Header = () => {
-  const { totalCoffees } = useGlobal();
+  const { totalCoffees, showQuantityOrder } = useGlobal();
   const navigate = useNavigate();
   return (
     <Flex justifyContent={"space-between"} m={"20px"}>
@@ -40,6 +40,7 @@ export const Header = () => {
             leftIcon={<FaShoppingCart color={'#C47F17'}/>}
             onClick={() => navigate("/checkout")}
           />
+          {totalCoffees > 0 && showQuantityOrder &&
           <Flex
             w={"15px"}
             h={"15px"}
@@ -52,6 +53,7 @@ export const Header = () => {
           >
             <Text color={'white'} fontSize={'10px'}>{totalCoffees}</Text>
           </Flex>
+          }
         </Flex>
       </Flex>
     </Flex>

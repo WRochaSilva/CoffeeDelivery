@@ -53,7 +53,7 @@ export const Checkout = () => {
   const toast = useToast();
   const navigate = useNavigate();
 
-  const { handleDataDelivery } = useGlobal();
+  const { handleDataDelivery, handleShowQuantityOrder } = useGlobal();
 
   const [typePaymeny, setTypePayment] = useState(-1);
   const handleSubmitDataDelivery: SubmitHandler<TDelivery> = (
@@ -70,6 +70,7 @@ export const Checkout = () => {
       payment: typePaymeny,
     };
     handleDataDelivery(payloadDataDelivery);
+    handleShowQuantityOrder(false)
     navigate("/Confirmed");
   };
 
