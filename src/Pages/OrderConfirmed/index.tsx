@@ -7,8 +7,6 @@ import { BiSolidDollarCircle } from "react-icons/bi";
 
 export const OrderConfirmed = () => {
   const { dataDelivery } = useGlobal();
-
-  console.log(dataDelivery);
   return (
     <Grid gridTemplateColumns={"repeat(2, minmax(0, 1fr))"}>
       <GridItem m={"20px"}>
