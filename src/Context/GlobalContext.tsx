@@ -1,4 +1,4 @@
-import { createContext, useContext, useReducer, useState } from "react";
+import { createContext, useContext, useReducer, useState, useEffect } from "react";
 import { DataBaseCoffees } from "../DataBaseCoffees";
 
 type TMenu = {
@@ -26,7 +26,8 @@ type TGlobalProps = {
   totalCoffees: number;
   dataDelivery: TDelivery | undefined;
   handleAddQuantityCoffee: (idCoffee: number) => void;
-  removeCoffee: (idCoffee: number) => void;
+  handleRemoveQuantityCoffee: (idCoffee: number) => void;
+  handleDeleteCoffee: (idCoffee: number) => void;
   handleDataDelivery: (data: TDelivery) => void;
 };
 
@@ -51,13 +52,20 @@ export const GlobalContext = ({ children }: { children: JSX.Element }) => {
         return coffee;
       });
     }
+    if (action.type === "DELETE_COFFEE") {
+      return state.map((coffee) => {
+        if (coffee.id === action.payload.idCoffee) {
+          return { ...coffee, orderQuantity: (coffee.orderQuantity = 0) };
+        }
+        return coffee;
+      });
+    }
     return state;
   }, DataBaseCoffees);
 
   const [dataDelivery, setDataDelivery] = useState<TDelivery | undefined>(
     undefined
   );
-
 
   const handleAddQuantityCoffee = (idCoffee: number) => {
     dispatch({
@@ -69,7 +77,7 @@ export const GlobalContext = ({ children }: { children: JSX.Element }) => {
     setTotalCoffees((prevTotal) => prevTotal + 1);
   };
 
-  const removeCoffee = (idCoffee: number) => {
+  const handleRemoveQuantityCoffee = (idCoffee: number) => {
     dispatch({
       type: "REMOVE_COFFEE",
       payload: {
@@ -78,6 +86,29 @@ export const GlobalContext = ({ children }: { children: JSX.Element }) => {
     });
     setTotalCoffees((prevTotal) => prevTotal - 1);
   };
+  const handleDeleteCoffee = (idCoffee: number) => {
+    dispatch({
+      type: "DELETE_COFFEE",
+      payload: {
+        idCoffee,
+      },
+    });
+    const cafeQueSeraDeletado = coffees.find((item) => item.id === idCoffee);
+    if (cafeQueSeraDeletado) { 
+      setTotalCoffees(
+        (prevTotal) => prevTotal - cafeQueSeraDeletado.orderQuantity
+      );
+    }
+  };
+
+  useEffect(() => {
+    // Calcula o total de cafés sempre que o estado coffees mudar
+    const newTotalCoffees = coffees.reduce(
+      (total, coffee) => total + coffee.orderQuantity,
+      0
+    );
+    setTotalCoffees(newTotalCoffees);
+  }, [coffees]);
 
   const handleDataDelivery = (data: TDelivery) => {
     setDataDelivery({
@@ -99,7 +130,8 @@ export const GlobalContext = ({ children }: { children: JSX.Element }) => {
         totalCoffees,
         dataDelivery,
         handleAddQuantityCoffee,
-        removeCoffee,
+        handleRemoveQuantityCoffee,
+        handleDeleteCoffee,
         handleDataDelivery,
       }}
     >

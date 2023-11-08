@@ -11,7 +11,7 @@ import {
   Divider,
 } from "@chakra-ui/react";
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { CiLocationOn } from "react-icons/ci";
 import { useNavigate } from "react-router-dom";
@@ -53,9 +53,9 @@ export const Checkout = () => {
   const toast = useToast();
   const navigate = useNavigate();
 
-  const { handleDataDelivery} = useGlobal();
-
   const [typePaymeny, setTypePayment] = useState(-1);
+  const { handleDataDelivery, handleAddQuantityCoffee, handleRemoveQuantityCoffee, handleDeleteCoffee} = useGlobal();
+
   const handleSubmitDataDelivery: SubmitHandler<TDelivery> = (
     dataAdress: TDelivery
   ) => {
@@ -158,7 +158,7 @@ export const Checkout = () => {
     coffees.filter((coffee) => coffee.orderQuantity > 0)
   );
 
-  const totalValueItem = coffeesAdded.map(
+  const totalValueItem = coffees.map(
     (coffeeAdd) => coffeeAdd.price * coffeeAdd.orderQuantity
   );
   const totalOrder = totalValueItem.reduce((total, order) => {
@@ -166,37 +166,6 @@ export const Checkout = () => {
   }, 0);
   const deliveryValue = 5.15;
   const valueOrder = totalOrder + deliveryValue;
-
-  const handleDeleteQuantityCoffeeAdded = (idCoffee: number) => {
-    setCoffeesAdded((prevCoffees) =>
-      prevCoffees.map((coffee) => {
-        if (coffee.id === idCoffee && coffee.orderQuantity > 0) {
-          return { ...coffee, orderQuantity: coffee.orderQuantity - 1 };
-        }
-        return coffee;
-      })
-    );
-  };
-  const handleAddQuantityCoffeeAdded = (idCoffee: number) => {
-    setCoffeesAdded((prevCoffees) =>
-      prevCoffees.map((coffee) => {
-        if (coffee.id === idCoffee && coffee.orderQuantity > 0) {
-          return { ...coffee, orderQuantity: coffee.orderQuantity + 1 };
-        }
-        return coffee;
-      })
-    );
-  };
-  const handleDeleteAllQuantityCoffeeAdded = (idCoffee: number) => {
-    setCoffeesAdded((prevCoffees) =>
-      prevCoffees.map((coffee) => {
-        if (coffee.id === idCoffee && coffee.orderQuantity > 0) {
-          return { ...coffee, orderQuantity: (coffee.orderQuantity = 0) };
-        }
-        return coffee;
-      })
-    );
-  };
 
   return (
     <Grid
@@ -357,6 +326,7 @@ export const Checkout = () => {
           </Flex>
         </Flex>
       </GridItem>
+      {/* ///////////////////////////////////////////////////////////////////////////////////////// */}
       <GridItem>
         <Flex
           flexDir={"column"}
@@ -365,17 +335,17 @@ export const Checkout = () => {
           bgColor={"#F3F2F2"}
           borderRadius={" 6px 44px"}
         >
-          {coffeesAdded.map(
-            (coffeeAdd) =>
-              coffeeAdd.orderQuantity > 0 && (
-                <>
+          {coffees.map(
+            (coffee) =>
+              coffee.orderQuantity > 0 && (
+                <Flex key={coffee.id}>
                   <Flex>
-                    <Img src={coffeeAdd.photo} w={"64px"} h={"64px"} />
+                    <Img src={coffee.photo} w={"64px"} h={"64px"} />
                     <Flex flexDir={"column"}>
                       <Flex w={"270px"} justifyContent={"space-between"}>
-                        <Text ml={"20px"}>{coffeeAdd.name}</Text>
+                        <Text ml={"20px"}>{coffee.name}</Text>
                         <Text as={"b"}>
-                          {`R$ ${coffeeAdd.price * coffeeAdd.orderQuantity}`}
+                          {`R$ ${coffee.price * coffee.orderQuantity}`}
                         </Text>
                       </Flex>
                       <Flex alignItems={"center"}>
@@ -390,20 +360,20 @@ export const Checkout = () => {
                             colorScheme="transparent"
                             bgColor={"#E6E5E5"}
                             color={"#8047F8"}
-                            isDisabled={coffeeAdd.orderQuantity < 1}
+                            isDisabled={coffee.orderQuantity < 1}
                             onClick={() => {
-                              handleDeleteQuantityCoffeeAdded(coffeeAdd.id);
+                              handleRemoveQuantityCoffee(coffee.id);
                             }}
                           >
                             -
                           </Button>
-                          <Text>{coffeeAdd.orderQuantity}</Text>
+                          <Text>{coffee.orderQuantity}</Text>
                           <Button
                             colorScheme="transparent"
                             bgColor={"#E6E5E5"}
                             color={"#8047F8"}
                             onClick={() => {
-                              handleAddQuantityCoffeeAdded(coffeeAdd.id);
+                              handleAddQuantityCoffee(coffee.id);
                             }}
                           >
                             +
@@ -413,7 +383,7 @@ export const Checkout = () => {
                           bgColor={"#E6E5E5"}
                           leftIcon={<FcEmptyTrash />}
                           onClick={() => {
-                            handleDeleteAllQuantityCoffeeAdded(coffeeAdd.id);
+                            handleDeleteCoffee(coffee.id);
                           }}
                         >
                           Remover
@@ -425,7 +395,7 @@ export const Checkout = () => {
                     border={"1px solid #E6E5E5"}
                     m={"10px 10px 20px 10px"}
                   />
-                </>
+                </Flex>
               )
           )}
           <Flex justifyContent={"space-between"}>

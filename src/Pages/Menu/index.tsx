@@ -4,7 +4,7 @@ import { useGlobal } from "../../Context/GlobalContext";
 import { useNavigate } from "react-router-dom";
 
 export const Menu = () => {
-  const { coffees, handleAddQuantityCoffee, removeCoffee } = useGlobal();
+  const { coffees, handleAddQuantityCoffee, handleRemoveQuantityCoffee } = useGlobal();
   const navigate = useNavigate();
 
   return (
@@ -46,7 +46,7 @@ export const Menu = () => {
                 colorScheme="transparent"
                 color={"#8047F8"}
                 isDisabled={coffee.orderQuantity < 1 }
-                onClick={() => removeCoffee(coffee.id)}
+                onClick={() => handleRemoveQuantityCoffee(coffee.id)}
               >
                 -
               </Button>
