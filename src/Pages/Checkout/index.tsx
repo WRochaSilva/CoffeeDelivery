@@ -152,7 +152,7 @@ export const Checkout = () => {
     return total + order;
   }, 0);
   const deliveryValue = 5.15;
-  const valueOrder = totalOrder + deliveryValue;
+  const valueOrder = totalOrder + deliveryValue; 
 
   return (
     <Grid
@@ -313,7 +313,6 @@ export const Checkout = () => {
           </Flex>
         </Flex>
       </GridItem>
-      {/* ///////////////////////////////////////////////////////////////////////////////////////// */}
       <GridItem>
         <Flex
           flexDir={"column"}
