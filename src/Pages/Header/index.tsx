@@ -3,11 +3,13 @@ import Logo from "../../assets/Logo.svg";
 import { FaLocationDot } from "react-icons/fa6";
 import { FaShoppingCart } from "react-icons/fa";
 import { useGlobal } from "../../Context/GlobalContext";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useLocation } from "react-router-dom";
 
 export const Header = () => {
-  const { totalCoffees, showQuantityOrder } = useGlobal();
+  const { totalCoffees } = useGlobal();
   const navigate = useNavigate();
+  const location = useLocation()
+  const isConfirmedPage = location.pathname === '/Confirmed';
   return (
     <Flex justifyContent={"space-between"} m={"20px"}>
       <Img src={Logo} />
@@ -40,7 +42,7 @@ export const Header = () => {
             leftIcon={<FaShoppingCart color={'#C47F17'}/>}
             onClick={() => navigate("/checkout")}
           />
-          {totalCoffees > 0 && showQuantityOrder &&
+          {totalCoffees > 0 && !isConfirmedPage &&
           <Flex
             w={"15px"}
             h={"15px"}

@@ -25,8 +25,6 @@ type TGlobalProps = {
   coffees: TMenu[];
   totalCoffees: number;
   dataDelivery: TDelivery | undefined;
-  showQuantityOrder: boolean;
-  handleShowQuantityOrder: (status: boolean)=> void;
   handleAddQuantityCoffee: (idCoffee: number) => void;
   removeCoffee: (idCoffee: number) => void;
   handleDataDelivery: (data: TDelivery) => void;
@@ -35,11 +33,7 @@ type TGlobalProps = {
 const CtxGlobal = createContext({} as TGlobalProps);
 
 export const GlobalContext = ({ children }: { children: JSX.Element }) => {
-  const [showQuantityOrder, setShowQuantityOrder] = useState(true)
   const [totalCoffees, setTotalCoffees] = useState(0);
-  const handleShowQuantityOrder = (status: boolean)=>{
-    setShowQuantityOrder(status)
-  }
   const [coffees, dispatch] = useReducer((state: TMenu[], action: any) => {
     if (action.type === "ADD_COFFEE") {
       return state.map((coffee) => {
@@ -104,8 +98,6 @@ export const GlobalContext = ({ children }: { children: JSX.Element }) => {
         coffees,
         totalCoffees,
         dataDelivery,
-        showQuantityOrder,
-        handleShowQuantityOrder,
         handleAddQuantityCoffee,
         removeCoffee,
         handleDataDelivery,
