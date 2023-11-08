@@ -11,7 +11,7 @@ import {
   Divider,
 } from "@chakra-ui/react";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { CiLocationOn } from "react-icons/ci";
 import { useNavigate } from "react-router-dom";
@@ -21,15 +21,6 @@ import { BsCurrencyDollar } from "react-icons/bs";
 import { BsCreditCard2Back } from "react-icons/bs";
 import { BsCreditCard } from "react-icons/bs";
 import { FcEmptyTrash } from "react-icons/fc";
-
-type Tmenu = {
-  id: number;
-  name: string;
-  photo: string;
-  description: string;
-  price: number;
-  orderQuantity: number;
-};
 
 type TColorButtonPayment = {
   credit: "#E6E5E5" | "gray";
@@ -154,10 +145,6 @@ export const Checkout = () => {
     }
   };
   const { coffees } = useGlobal();
-  const [coffeesAdded, setCoffeesAdded] = useState<Tmenu[]>(
-    coffees.filter((coffee) => coffee.orderQuantity > 0)
-  );
-
   const totalValueItem = coffees.map(
     (coffeeAdd) => coffeeAdd.price * coffeeAdd.orderQuantity
   );
