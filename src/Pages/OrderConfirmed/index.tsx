@@ -1,4 +1,4 @@
-import { Flex, Icon, Img, Text } from "@chakra-ui/react";
+import { Flex, Grid, GridItem, Icon, Img, Text } from "@chakra-ui/react";
 import sucess from "../../assets/sucess.svg";
 import { useGlobal } from "../../Context/GlobalContext";
 import { GoLocation } from "react-icons/go";
@@ -10,12 +10,20 @@ export const OrderConfirmed = () => {
 
   console.log(dataDelivery);
   return (
-    <>
-      <Flex flexDir={"column"}>
-        <Text>Uhu! Pedido confirmado</Text>
-        <Text>Agora é só aguardar que logo o café chegará até você</Text>
-      </Flex>
-      <Flex alignItems={"center"}>
+    <Grid gridTemplateColumns={"repeat(2, minmax(0, 1fr))"}>
+      <GridItem m={"20px"}>
+        <Flex flexDir={"column"} mb={"20px"}>
+          <Text
+            fontFamily="Berlin Sans FB, sans-serif"
+            fontSize={"32px"}
+            color={"#C47F17"}
+          >
+            Uhu! Pedido confirmado
+          </Text>
+          <Text fontFamily="Roboto" fontSize={"20px"} color={"#403937"}>
+            Agora é só aguardar que logo o café chegará até você
+          </Text>
+        </Flex>
         <Flex
           flexDir={"column"}
           w={"470px"}
@@ -48,15 +56,19 @@ export const OrderConfirmed = () => {
                   ? "Cartão de crédito"
                   : dataDelivery?.payment === 1
                   ? "Cartão de débito"
-                  : "Dinheiro"}
+                  : dataDelivery?.payment === 2
+                  ? "Dinheiro"
+                  : ""}
               </Text>
             </Flex>
           </Flex>
         </Flex>
+      </GridItem>
+      <GridItem>
         <Flex w={"492px"} h={"293px"}>
           <Img src={sucess} />
         </Flex>
-      </Flex>
-    </>
+      </GridItem>
+    </Grid>
   );
 };
