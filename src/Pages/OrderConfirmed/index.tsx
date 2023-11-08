@@ -21,7 +21,7 @@ export const OrderConfirmed = () => {
           w={"470px"}
           h={"160px"}
           borderRadius={"6px 36px"}
-          border={"1px solid #DBAC2C"}
+          border={"1px inset #DBAC2C"}
           pl={"20px"}
           justifyContent={"center"}
         >
